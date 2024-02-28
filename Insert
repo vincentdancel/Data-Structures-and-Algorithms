@@ -1,0 +1,97 @@
+package labact2;
+
+public class LabAct2 {
+    //a node in a linked list
+
+    public int data;
+    public static LabAct2 head;
+    LabAct2 next;
+
+    //constructor to initialize to a node 
+    LabAct2(int data) {
+        this.data = data;
+        this.next = null;
+    }
+
+    static void print(LabAct2 n) {
+        LabAct2 current = head;
+        while (current != null) {
+            if (current != null && current.next != null) {
+                System.out.print(current.data + " → ");
+            } else {
+                System.out.println(current.data + " ");
+            }
+            current = current.next;
+        }
+    }
+    //method to inset a new node at the end of the linked list
+
+    static void insertLast(int data) {
+        LabAct2 new_node = new LabAct2(data);
+
+        if (head == null) {
+            head = new_node;
+            return;
+        }
+
+        LabAct2 last = head;
+        while (last.next != null) {
+            last = last.next;
+        }
+
+        last.next = new_node;
+    }
+
+    public static void insertAtFront(int data) {
+        LabAct2 newNode = new LabAct2(data);
+        newNode.data = data;
+        newNode.next = head;
+        head = newNode;
+    }
+
+    static LabAct2 insertAfter(LabAct2 prev_node, int data) {
+
+        if (prev_node == null) {
+            // 1. check if the given prev_node is NULL
+            System.out.println(
+                    "The given previous node cannot be NULL");
+            return null;
+        }
+        // 2.allocate new node
+        LabAct2 new_node = new LabAct2(data);
+        // 3. put in the data
+        new_node.data = data;
+        // 4. Make next of new node as next of prev_node
+        new_node.next = prev_node.next;
+
+        return prev_node.next = new_node;
+    }
+
+    public static void main(String[] args) {
+
+        LabAct2 n1 = new LabAct2(30);
+        LabAct2 n2 = new LabAct2(50);
+        LabAct2 n3 = new LabAct2(70);
+        LabAct2 n4 = new LabAct2(90);
+
+        //Form a linked list
+        head = n1;
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+
+        System.out.println("Before");
+        print(head);
+
+        //inserting new nodes at the linked list
+        insertLast(100);
+        insertAtFront(10);
+        insertAfter(head, 20);
+        insertAfter(n1, 40);
+        insertAfter(n2, 60);
+        insertAfter(n3, 80);
+
+        System.out.println("After");
+        print(head); //print the linked list
+    }
+}
