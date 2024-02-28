@@ -1,0 +1,57 @@
+package car;
+
+public class Car {
+
+    public String name;
+    public String color;
+    public String brand;
+
+    public Car(String name, String color, String brand) {
+
+        this.name = name;
+        this.color = color;
+        this.brand = brand;
+    }
+
+    public static void main(String[] args) {
+
+        Car car1 = new Car("Dancel", "Black", "Toyota");
+        System.out.println("Car1 Attributes:");
+        System.out.println("Name:" + car1.name);
+        System.out.println("Color:" + car1.color);
+        System.out.println("Brand:" + car1.brand);
+
+        System.out.println('\n');
+
+        Car car2 = new Car("Lisa", "Green", "Ford");
+        System.out.println("Car2 Attributes:");
+        System.out.println("Name:" + car2.name);
+        System.out.println("Color:" + car2.color);
+        System.out.println("Brand:" + car2.brand);
+
+        System.out.println('\n');
+
+        Car car3 = new Car("Jisoo", "Yellow", "Lambhorghini");
+        System.out.println("Car3 Attributes:");
+        System.out.println("Name:" + car3.name);
+        System.out.println("Color:" + car3.color);
+        System.out.println("Brand:" + car3.brand);
+
+        System.out.println('\n');
+
+        Car car4 = new Car("Jennie", "Gray", "Ferrari");
+        System.out.println("Attributes:");
+        System.out.println("Name:" + car4.name);
+        System.out.println("Color:" + car4.color);
+        System.out.println("Brand:" + car4.brand);
+
+        System.out.println('\n');
+
+        Car car5 = new Car("Rose", "Pink", "Nissan");
+        System.out.println("Attributes:");
+        System.out.println("Name:" + car5.name);
+        System.out.println("Color:" + car5.color);
+        System.out.println("Brand:" + car5.brand);
+
+    }
+}
