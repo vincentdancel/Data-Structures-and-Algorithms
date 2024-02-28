@@ -1,0 +1,79 @@
+package javaapplication12;
+
+public class Main {
+
+    public int data;
+    public Main next;
+
+    // Constructor
+    public Main(int data) {
+        this.data = data;
+        this.next = null;
+    }
+
+    // Method to print the linked list
+    public static void print(Main head) {
+        Main current = head;
+        while (current != null) {
+            System.out.print(current.data);
+            if (current.next != null) {
+                System.out.print(" → ");
+            }
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    // Method to insert a new node at the end of the linked list
+    public static Main insert(Main head, int data) {
+        Main newNode = new Main(data);
+        if (head == null) {
+            return newNode;
+        }
+        Main current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+        current.next = newNode;
+        return head;
+    }
+
+    // Method to remove the first occurrence of a node with given data
+    public static Main removeNode(Main head, int key) {
+        if (head == null) {
+            return null;
+        }
+        if (head.data == key) {
+            return head.next;
+        }
+        Main current = head;
+        while (current.next != null && current.next.data != key) {
+            current = current.next;
+        }
+        if (current.next != null) {
+            current.next = current.next.next;
+        }
+        return head;
+    }
+
+    public static void main(String[] args) {
+        Main head = null;
+        head = insert(head, 49);
+        head = insert(head, 50);
+        head = insert(head, 51);
+        head = insert(head, 57);
+        head = insert(head, 52);
+        head = insert(head, 48);
+
+        System.out.println("Before removal:");
+        print(head);
+
+        // Remove 49, 48, and 57 respectively
+        head = removeNode(head, 49);
+        head = removeNode(head, 48);
+        head = removeNode(head, 57);
+
+        System.out.println("After removal:");
+        print(head);
+    }
+}
