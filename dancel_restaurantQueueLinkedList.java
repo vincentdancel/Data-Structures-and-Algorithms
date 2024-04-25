@@ -1,114 +1,110 @@
-package javaapplication43;
+package javaapplication44;
 
 import javax.swing.JOptionPane;
 
-import javax.swing.*;
+class Node {
 
-class Customer {
-    private String name;
-    private int numPeople;
+    String data;
+    Node next;
 
-    public Customer(String name, int numPeople) {
-        this.name = name;
-        this.numPeople = numPeople;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getNumPeople() {
-        return numPeople;
-    }
-
-    @Override
-    public String toString() {
-        return "Customer: " + name + " (Party of " + numPeople + ")";
-    }
-}
-
-class RestaurantQueue {
-    private static final int MAX_SIZE = 10;
-    private Customer[] queue;
-    private int front, rear, count;
-
-    public RestaurantQueue() {
-        queue = new Customer[MAX_SIZE];
-        front = rear = count = 0;
-    }
-
-    public void enqueue() {
-        if (isFull()) {
-            JOptionPane.showMessageDialog(null, "Queue is full. Please wait for a table to become available.");
-            return;
-        }
-
-        String name = JOptionPane.showInputDialog(null, "Enter customer name:");
-        int numPeople = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter number of people:"));
-        Customer customer = new Customer(name, numPeople);
-
-        queue[rear] = customer;
-        rear = (rear + 1) % MAX_SIZE;
-        count++;
-        JOptionPane.showMessageDialog(null, "Customer " + customer.getName() + " enqueued.");
-    }
-
-    public Customer dequeue() {
-        if (isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Queue is empty.");
-            return null;
-        }
-
-        Customer dequeuedCustomer = queue[front];
-        front = (front + 1) % MAX_SIZE;
-        count--;
-        JOptionPane.showMessageDialog(null, "Customer " + dequeuedCustomer.getName() + " dequeued and seated.");
-        return dequeuedCustomer;
-    }
-
-    public Customer peek() {
-
-        if (isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Queue is empty.");
-            return null;
-        }
-
-        return queue[front];
-    }
-
-    public boolean isEmpty() {
-        return count == 0;
-    }
-
-    public boolean isFull() {
-        return count == MAX_SIZE;
+    public Node(String data) {
+        this.data = data;
+        this.next = null;
     }
 }
 
 public class Main {
-    public static void main(String[] args) {
-        RestaurantQueue queue = new RestaurantQueue();
 
-        while (true) {
-            String input = JOptionPane.showInputDialog(null, "Restaurant Queueing System\n1. Enqueue Customer\n2. Dequeue Customer\n3. Peek at Next Customer\n4. Exit");
-            int choice = Integer.parseInt(input);
-            switch (choice) {
-                case 1:
-                    queue.enqueue();
-                    break;
-                case 2:
-                    queue.dequeue();
-                    break;
-                case 3:
-                    Customer nextCustomer = queue.peek();
-                    if (nextCustomer != null) {
-                        JOptionPane.showMessageDialog(null, "Next customer: " + nextCustomer);
-                    }
-                    break;
-                case 4:
-                    System.exit(0);
-                default:
-                    JOptionPane.showMessageDialog(null, "Invalid choice. Try again.");
+    Node front, rear;
+    int maxSize;
+    int size;
+
+    public Main(int maxSize) {
+        this.front = null;
+        this.rear = null;
+        this.maxSize = maxSize;
+        this.size = 0;
+    }
+
+    public void enqueue(String item) {
+        if (isFull()) {
+            JOptionPane.showMessageDialog(null, "Queue is full. Cannot enqueue item.");
+            return;
+        }
+
+        Node mymain = new Node(item);
+        if (isEmpty()) {
+            front = rear = mymain;
+        } else {
+            rear.next = mymain;
+            rear = mymain;
+        }
+        size++;
+    }
+
+    public String dequeue() {
+        if (isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Queue is empty. Cannot dequeue item.");
+            return null;
+        }
+
+        String item = front.data;
+        front = front.next;
+        size--;
+        return item;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public boolean isFull() {
+        return size == maxSize;
+    }
+
+    public String peek() {
+        if (isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Queue is empty. No item to peek.");
+            return null;
+        }
+
+        return front.data;
+    }
+
+    public static void main(String[] args) {
+        int maxSize = Integer.parseInt(JOptionPane.showInputDialog("Enter the maximum size of the queue:"));
+        Main queue = new Main(maxSize);
+
+        JOptionPane.showMessageDialog(null, "Queue created with maximum size: " + maxSize);
+
+        boolean running = true;
+        while (running) {
+            String choice = JOptionPane.showInputDialog(
+                    "Choose operation:\n1. Enqueue\n2. Dequeue\n3. Peek\n4. Check if empty\n5. Check if full\n6. Exit");
+
+            if (choice.equals("1")) {
+                String item = JOptionPane.showInputDialog("Enter the item to enqueue:");
+                queue.enqueue(item);
+            } else if (choice.equals("2")) {
+                String dequeuedItem = queue.dequeue();
+                if (dequeuedItem != null) {
+                    JOptionPane.showMessageDialog(null, "Dequeued item: " + dequeuedItem);
+                }
+            } else if (choice.equals("3")) {
+                String peekedItem = queue.peek();
+                if (peekedItem != null) {
+                    JOptionPane.showMessageDialog(null, "Peeked item: " + peekedItem);
+                }
+            } else if (choice.equals("4")) {
+                boolean empty = queue.isEmpty();
+                JOptionPane.showMessageDialog(null, "Queue empty: " + empty);
+            } else if (choice.equals("5")) {
+                boolean full = queue.isFull();
+                JOptionPane.showMessageDialog(null, "Queue full: " + full);
+            } else if (choice.equals("6")) {
+                running = false;
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid choice. Please try again.");
             }
         }
     }
