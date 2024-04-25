@@ -1,7 +1,6 @@
-package queueingsystem;
+package javaapplication43;
 
 import javax.swing.JOptionPane;
-
 
 import javax.swing.*;
 
@@ -114,9 +113,3 @@ public class Main {
         }
     }
 }
-
-
-
-    
-
-
